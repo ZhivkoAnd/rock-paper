@@ -38,9 +38,10 @@ function App() {
       default:
         console.log("Something is broken");
     }
-    if (computerPoints === 5 || userPoints === 5) {
-      setGameOver(true);
-    }
+    //
+    // if (computerPoints === 5 || userPoints === 5) {
+    //   setGameOver(true);
+    // }
     console.log("UserPoints:", userPoints, "computer Points:", computerPoints);
   }, [computerChoice, userChoice]);
 
@@ -94,8 +95,8 @@ function App() {
       </div>
       <div className="result">
         <h1>Turn result: {turnResult}</h1>
-
-        {gameOver && (
+        {/*  ???????????????????? */}
+        {(userPoints === 5 || computerPoints === 5) && (
           <div className="button-div">
             <button className="button" onClick={reset}>
               Restart game ?
