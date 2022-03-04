@@ -39,11 +39,15 @@ function App() {
         console.log("Something is broken");
     }
     //
-    // if (computerPoints === 5 || userPoints === 5) {
-    //   setGameOver(true);
-    // }
+
     console.log("UserPoints:", userPoints, "computer Points:", computerPoints);
   }, [computerChoice, userChoice]);
+
+  useEffect(() => {
+    if (computerPoints === 5 || userPoints === 5) {
+      setGameOver(() => true);
+    }
+  }, [computerPoints, userPoints]);
 
   const generateComputerChoice = () => {
     const randomChoice = choices[Math.floor(Math.random() * choices.length)];
@@ -95,8 +99,7 @@ function App() {
       </div>
       <div className="result">
         <h1>Turn result: {turnResult}</h1>
-        {/*  ???????????????????? */}
-        {(userPoints === 5 || computerPoints === 5) && (
+        {gameOver && (
           <div className="button-div">
             <button className="button" onClick={reset}>
               Restart game ?
