@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -11,12 +11,12 @@ function App() {
 
   const choices = ["rock", "paper", "scissors"];
 
+  // Since the computer generated choice and the person generated choice happen in the same function call it doesnt make sense to have a useEffect.
+
   const handleOnClick = (choice) => {
     setUserChoice(choice);
     generateComputerChoice();
-  };
 
-  useEffect(() => {
     switch (userChoice + computerChoice) {
       case "scissorspaper":
       case "rockscissors":
@@ -38,14 +38,18 @@ function App() {
       default:
         console.log("Something is broken");
     }
-    //
+    // Setting state is asynchronous operation, so the if check runs before the values are actually set. Thats why we cant use the the condition here
+    // Instead, we put it on the useEffect below. We could also use async await.
+    if (computerPoints === 5 || userPoints === 5) {
+      setGameOver(true);
+    }
+  };
 
-    console.log("UserPoints:", userPoints, "computer Points:", computerPoints);
-  }, [computerChoice, userChoice]);
+  // Creating a useEffect, that will check for ending the game, and will be updated with the user points
 
   useEffect(() => {
     if (computerPoints === 5 || userPoints === 5) {
-      setGameOver(() => true);
+      setGameOver(true);
     }
   }, [computerPoints, userPoints]);
 
